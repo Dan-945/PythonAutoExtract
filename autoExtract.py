@@ -1,4 +1,7 @@
 import os, logging
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s, - %(levelname)s - % (message)s')
+
+
 
 #TODO sett opp logging
 
