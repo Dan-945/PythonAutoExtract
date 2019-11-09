@@ -2,8 +2,9 @@ import os, logging
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s, - %(levelname)s - % (message)s')
 
 
+#TODO sett opp logging til fil når ferdig.
+searchPath = r'/home/thebox/SeagateDisk/MediaFolder/completed'
 
-#TODO sett opp logging
 
 #TODO søk igjennom download folder
 
