@@ -1,4 +1,5 @@
-import os, logging, zipfile
+import os, logging
+from zipfile import ZipExtFile
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s, - %(levelname)s %(message)s')
 
 
@@ -28,15 +29,10 @@ def searchFolders(searchPath):
 searchFolders(searchPath)
 logging.debug('Files to be extracted: %s ' % (filesToExtract))
 
-
-
-#TODO søk igjennom download folder
-
-
-
+zipfile.extract
 #TODO skill ut kilder med og uten .rar lag liste med rene .mkv downloads og kopier disse til plex mappe.
 
 
 #TODO extract nye filmer.
 
-#TODO legg inn ny fil med unrared for å unngå ny unraring. 
+#TODO legg inn ny fil med unrared for å unngå ny unraring.
