@@ -12,7 +12,7 @@ searchPath = r'/home/thebox/SeagateDisk/MediaFolder/testfolder'
 #searchPath = 'Y:\\MediaFolder\\testfolder\\'
 filesToExtract = []
 os.chdir(searchPath)
-
+#ser alle denne
 #Search through folders to find all rar files to be extracted.
 def folderContainsRar(folder):
     dir_listing = os.listdir(folder)
