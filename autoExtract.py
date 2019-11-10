@@ -3,7 +3,7 @@ import os, logging, rarfile
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s, - %(levelname)s %(message)s')
 
 # TODO log to txt file when done.
-searchPath = r'/home/thebox/SeagateDisk/MediaFolder/testfolder'
+searchPath = r'/home/thebox/SeagateDisk/MediaFolder/completed'
 
 filesToExtract = []
 os.chdir(searchPath)
@@ -15,10 +15,10 @@ def folderContainsRar(folder):
         if file.endswith('.rar'):
             logging.info('rar file found')
             if os.path.exists(os.path.join(folder, 'unrared.txt')):
-                logging.info('file already extracted, will be skipped')
+                logging.info('file already extracted, will be skipped') #TODO legg til kort beskrivelse av sti.
             else:
                 filesToExtract.append(os.path.join(searchPath, folder, file))
-                logging.info('added for extracting')
+                logging.info('added for extracting') #TODO legg til kort beskrivelse av sti.
     return
 
 # walk through all folders to check content.
@@ -28,7 +28,6 @@ def searchFolders(searchPath):
         folderContainsRar(folderName)
     logging.info('Search complete')
     return
-
 
 def unrar():
     for i in range(len(filesToExtract)):
@@ -41,6 +40,6 @@ def unrar():
 searchFolders(searchPath)
 logging.debug('Files to be extracted: %s ' % (filesToExtract))
 
-unrar()
+#unrar()
 
 # TODO skill ut kilder med og uten .rar lag liste med rene .mkv downloads og kopier disse til plex mappe.
