@@ -34,7 +34,7 @@ def unrar():
         x = rarfile.RarFile(filesToExtract[i])
         x.extractall()                          #TODO make handling for placement of extracted files.
         os.mknod(os.path.join(os.path.dirname(filesToExtract[i]),'unrared.txt'))
-        # x.close()
+        # x.close() #TODO do i need this?...
     return
 
 searchFolders(searchPath)
