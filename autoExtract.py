@@ -46,6 +46,7 @@ searchFolders(searchPath)
 logging.debug('Files to be extracted: %s ' % (filesToExtract))    
 #unrar()
 
+df
 
 #TODO skill ut kilder med og uten .rar lag liste med rene .mkv downloads og kopier disse til plex mappe.
 
