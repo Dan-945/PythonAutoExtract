@@ -1,18 +1,16 @@
 import os, logging, rarfile
-
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s, - %(levelname)s %(message)s')
-rarfile.UNRAR_TOOL = 'C:\\Program Files\\WinRAR\\UnRAR.exe'
-
+#rarfile.UNRAR_TOOL = 'C:\\Program Files\\WinRAR\\UnRAR.exe'
 
 #TODO sett opp logging til logfil når ferdig.
 #for linux:
-# searchPath = r'/home/thebox/SeagateDisk/MediaFolder/completed'
+searchPath = r'/home/thebox/SeagateDisk/MediaFolder/testfolder'
 
 #for windows:
 #searchPath = r'Y:\MediaFolder\completed'
 
 #testfolder
-searchPath = 'Y:\\MediaFolder\\testfolder\\'
+#searchPath = 'Y:\\MediaFolder\\testfolder\\'
 filesToExtract = []
 os.chdir(searchPath)
 
@@ -22,13 +20,14 @@ def folderContainsRar(folder):
         if file.endswith('.rar'):
 
             filesToExtract.append(os.path.join(searchPath, folder, file))
-            print('rar file found, added to list')
+            logging.info('rar file found, added to list')
     return
 
 def searchFolders(searchPath):
     logging.debug('Searching through folder')
     for folderName, subFolders, fileNames in os.walk(searchPath):
         folderContainsRar(folderName)
+    logging.info('Search complete')
     return
 searchFolders(searchPath)
 logging.debug('Files to be extracted: %s ' % (filesToExtract))
@@ -39,6 +38,7 @@ def unrar():
         x.extractall()
         #x.close()
     return
+
 unrar()
 #TODO skill ut kilder med og uten .rar lag liste med rene .mkv downloads og kopier disse til plex mappe.
 
