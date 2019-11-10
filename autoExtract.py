@@ -28,7 +28,6 @@ def folderContainsRar(folder):
                 logging.info('added for extracting')
     return
 
-
 # walk through all folders to check content.
 def searchFolders(searchPath):
     logging.debug('Searching through folder')
