@@ -2,18 +2,11 @@ import os, logging, rarfile
 
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s, - %(levelname)s %(message)s')
 
-# Try to get working on windows, unsuccesful
-# rarfile.UNRAR_TOOL = 'C:\\Program Files\\WinRAR\\UnRAR.exe'
-
 # TODO log to txt file when done.
-# for linux:
-# searchPath = r'/home/thebox/SeagateDisk/MediaFolder/testfolder'
+searchPath = r'/home/thebox/SeagateDisk/MediaFolder/testfolder'
 
-# testfolder
-searchPath = 'Y:\\MediaFolder\\testfolder\\'
 filesToExtract = []
 os.chdir(searchPath)
-
 
 # Search through folders to find all rar files to be extracted.
 def folderContainsRar(folder):
@@ -40,17 +33,14 @@ def searchFolders(searchPath):
 def unrar():
     for i in range(len(filesToExtract)):
         x = rarfile.RarFile(filesToExtract[i])
-        x.extractall()
-        os.mknod('unrared.txt')
+        x.extractall()                          #TODO make handling for placement of extracted files.
+        os.mknod(os.path.join(os.path.dirname(filesToExtract[i]),'unrared.txt'))
         # x.close()
     return
 
-
-os.mkdir()
 searchFolders(searchPath)
 logging.debug('Files to be extracted: %s ' % (filesToExtract))
-# unrar()
+
+unrar()
 
 # TODO skill ut kilder med og uten .rar lag liste med rene .mkv downloads og kopier disse til plex mappe.
-
-# TODO legg inn ny fil med unrared for å unngå ny unraring.
