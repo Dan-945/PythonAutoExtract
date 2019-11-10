@@ -6,13 +6,13 @@ logging.basicConfig(level=logging.DEBUG, format='%(asctime)s, - %(levelname)s %(
 
 #TODO log to txt file when done.
 #for linux:
-searchPath = r'/home/thebox/SeagateDisk/MediaFolder/testfolder'
+#searchPath = r'/home/thebox/SeagateDisk/MediaFolder/testfolder'
 
 #testfolder
-#searchPath = 'Y:\\MediaFolder\\testfolder\\'
+searchPath = 'Y:\\MediaFolder\\testfolder\\'
 filesToExtract = []
 os.chdir(searchPath)
-#ser alle denne
+
 #Search through folders to find all rar files to be extracted.
 def folderContainsRar(folder):
     dir_listing = os.listdir(folder)
@@ -44,7 +44,7 @@ def unrar():
 
 searchFolders(searchPath)
 logging.debug('Files to be extracted: %s ' % (filesToExtract))    
-unrar()
+#unrar()
 
 
 #TODO skill ut kilder med og uten .rar lag liste med rene .mkv downloads og kopier disse til plex mappe.
