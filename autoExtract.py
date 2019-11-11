@@ -44,4 +44,4 @@ logging.debug('Files to be extracted: %s ' % (filesToExtract))
 
 # TODO skill ut kilder med og uten .rar lag liste med rene .mkv downloads og kopier disse til plex mappe.
 
-#Dette er en test for å se at endringer skjer på server
+#Dette er en test for å se at endringer skjer på server2
