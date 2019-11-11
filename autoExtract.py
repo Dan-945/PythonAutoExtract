@@ -1,6 +1,6 @@
 import os, logging, rarfile, moveFiles
 
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s, - %(levelname)s %(message)s')
+logging.basicConfig(filename='/home/thebox/SeagateDisk/MediaFolder/Scripts/Logs/autoExtractLog', level=logging.DEBUG, format='%(asctime)s, - %(levelname)s %(message)s')
 #logging.disable(logging.DEBUG)
 # TODO log to txt file when done.
 searchPath = r'/home/thebox/SeagateDisk/MediaFolder/testfolder'
@@ -24,9 +24,10 @@ def folderContainsRar(folder):
             if os.path.exists(os.path.join(folder, 'copied.txt')):
                   logging.debug('file already copied, will be skipped')   
             else:
-                #os.popen('cp'+(os.path.join(searchPath, folder, file))+ moveFiles.fileSort(file)) #TODO sorting function needed
+                #os.popen('cp '+(os.path.join(searchPath, folder, file))+' '+ moveFiles.fileSort(file))
                 logging.debug('file will be copied to %s' % (moveFiles.fileSort(file)))
                 logging.info('%s file to be copied' % (file))
+                os.mknod(os.path.join(searchPath,folder,'copied.txt'))
     return
 
 # walk through all folders to check content.
@@ -40,8 +41,8 @@ def searchFolders(searchPath):
 def unrar():
     for i in range(len(filesToExtract)):
         x = rarfile.RarFile(filesToExtract[i])
-        #x.extractall(moveFiles.fileSort(filesToExtract[i]))                          #TODO sorting function needed
-        logging.debug('file will be extracted to %s' % (moveFiles.fileSort(filesToExtract[i])))
+        #x.extractall(moveFiles.fileSort(os.path.basename(filesToExtract[i])))                        
+        logging.debug('file will be extracted to %s' % (moveFiles.fileSort(os.path.basename(filesToExtract[i]))))
         os.mknod(os.path.join(os.path.dirname(filesToExtract[i]),'unrared.txt'))
         # x.close() #TODO do i need this?...
     return
@@ -51,4 +52,3 @@ logging.info('Files to be extracted: %s ' % (filesToExtract))
 
 unrar()
 
-#TODO sorting function needed
