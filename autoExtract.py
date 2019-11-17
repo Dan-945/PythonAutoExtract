@@ -1,12 +1,11 @@
 import os, logging, rarfile, moveFiles
 
-logging.basicConfig(filename='/home/thebox/SeagateDisk/MediaFolder/Scripts/Logs/autoExtractLog', level=logging.DEBUG, format='%(asctime)s, - %(levelname)s %(message)s')
+logging.basicConfig(filename='/home/thebox/Scripts/autoExtractLog.txt', level=logging.DEBUG, format='%(asctime)s, - %(levelname)s %(message)s')
 #logging.disable(logging.DEBUG)
 # TODO log to txt file when done.
 searchPath = r'/home/thebox/SeagateDisk/MediaFolder/testfolder'
 
 filesToExtract = []
-#os.chdir(searchPath) #Not necessary as all paths used are absolute?
 
 # Search through folders to find all rar files to be extracted.
 def folderContainsRar(folder):
@@ -24,7 +23,7 @@ def folderContainsRar(folder):
             if os.path.exists(os.path.join(folder, 'copied.txt')):
                   logging.debug('file already copied, will be skipped')   
             else:
-                #os.popen('cp '+(os.path.join(searchPath, folder, file))+' '+ moveFiles.fileSort(file))
+                #os.popen('cp '+(os.path.join(searchPath, folder, file))+' '+ moveFiles.fileSort(file)) #TODO missing filepath for skipped files
                 logging.debug('file will be copied to %s' % (moveFiles.fileSort(file)))
                 logging.info('%s file to be copied' % (file))
                 os.mknod(os.path.join(searchPath,folder,'copied.txt'))
