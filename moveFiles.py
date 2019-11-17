@@ -2,7 +2,7 @@ import os, logging
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s, - %(levelname)s %(message)s')
 
 #real destination
-destinationPath = r'/home/thebox/SeagateDisk/MediaFolder/PLEX MEDIA FOLDER'
+destinationPath = r'/home/thebox/SeagateDisk/MediaFolder/plexMediaFolder'
 #test destination
 #destinationPath = r'/home/thebox/SeagateDisk/MediaFolder/testfolder'
 
@@ -11,7 +11,9 @@ destinationPath = r'/home/thebox/SeagateDisk/MediaFolder/PLEX MEDIA FOLDER'
 def fileSort(file):
     destinationFolder = ''
     destinationFolder = file[0].upper()
+    finalDestination = destinationPath+'/'+destinationFolder
     #print(destinationPath +'/'+ destinationFolder)
-    return destinationPath +'/'+ destinationFolder
+    
+    return finalDestination
 
 
