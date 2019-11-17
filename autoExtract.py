@@ -8,7 +8,7 @@ fh.setFormatter(formatter)
 
 logging.disable(logging.DEBUG)
 
-searchPath = r'/home/thebox/SeagateDisk/MediaFolder/completed/Modern.Family.S01-S08.720p.BluRay.WEB.DL.nHD.x264.NhaNc3'
+searchPath = r'/home/thebox/SeagateDisk/MediaFolder/completed'
 filesToExtract = []
 
 # Search through folders to find all rar files to be extracted.
@@ -28,7 +28,7 @@ def folderContainsRar(folder):
             else:
                 fileToBeCopied = (os.path.join(searchPath, folder, file))
                 if os.path.exists(fileToBeCopied):
-                    os.popen('cp '+(os.path.join(searchPath, folder, file))+' '+ moveFiles.fileSort(file))
+                    #os.popen('cp '+(os.path.join(searchPath, folder, file))+' '+ moveFiles.fileSort(file))
                     logger.debug('%s file will be copied to %s' % ( (os.path.join(searchPath, folder, file)), moveFiles.fileSort(file)))
                     logger.info('%s file to be copied' % (file))
                     os.mknod(os.path.join(searchPath,folder,file+'copied.txt'))
