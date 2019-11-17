@@ -1,10 +1,12 @@
 import os, logging, rarfile, moveFiles
-
-logging.basicConfig(filename='/home/thebox/Scripts/autoExtractLog.txt', level=logging.DEBUG, format='%(asctime)s, - %(levelname)s %(message)s')
-#logging.disable(logging.DEBUG)
-# TODO log to txt file when done.
+logger = logging.getLogger('autoExtracter')
+fh = logging.FileHandler('/home/thebox/Scripts/autoExtractLog.txt')
+fh.setLevel(logging.DEBUG)
+formatter = logging.Formatter('%(asctime)s, - %(levelname)s %(message)s')
+logger.addHandler(fh)
+fh.setFormatter(formatter)
 searchPath = r'/home/thebox/SeagateDisk/MediaFolder/testfolder'
-
+logger.info('test')
 filesToExtract = []
 
 # Search through folders to find all rar files to be extracted.
@@ -12,42 +14,42 @@ def folderContainsRar(folder):
     dir_listing = os.listdir(folder)
     for file in dir_listing:
         if file.endswith('.rar'):
-            logging.debug('rar file found')
+            logger.debug('rar file found')
             if os.path.exists(os.path.join(folder, 'unrared.txt')):
-                logging.debug('%s file already extracted, will be skipped' % (file))
+                logger.debug('%s file already extracted, will be skipped' % (file))
             else:
                 filesToExtract.append(os.path.join(searchPath, folder, file))
-                logging.info('%s added for extracting' % (file))
+                logger.info('%s added for extracting' % (file))
         if file.endswith('.mkv'):
-            logging.debug('mkv file found')
+            logger.debug('mkv file found')
             if os.path.exists(os.path.join(folder, 'copied.txt')):
-                  logging.debug('file already copied, will be skipped')   
+                  logger.debug('file already copied, will be skipped')   
             else:
                 #os.popen('cp '+(os.path.join(searchPath, folder, file))+' '+ moveFiles.fileSort(file)) #TODO missing filepath for skipped files
-                logging.debug('file will be copied to %s' % (moveFiles.fileSort(file)))
-                logging.info('%s file to be copied' % (file))
+                logger.debug('file will be copied to %s' % (moveFiles.fileSort(file)))
+                logger.info('%s file to be copied' % (file))
                 os.mknod(os.path.join(searchPath,folder,'copied.txt'))
     return
 
 # walk through all folders to check content.
 def searchFolders(searchPath):
-    logging.info('Searching through folder')
+    logger.info('Searching through folder')
     for folderName, subFolders, fileNames in os.walk(searchPath):
         folderContainsRar(folderName)
-    logging.info('Search complete')
+    logger.info('Search complete')
     return
 
 def unrar():
     for i in range(len(filesToExtract)):
         x = rarfile.RarFile(filesToExtract[i])
         #x.extractall(moveFiles.fileSort(os.path.basename(filesToExtract[i])))                        
-        logging.debug('file will be extracted to %s' % (moveFiles.fileSort(os.path.basename(filesToExtract[i]))))
+        logger.debug('file will be extracted to %s' % (moveFiles.fileSort(os.path.basename(filesToExtract[i]))))
         os.mknod(os.path.join(os.path.dirname(filesToExtract[i]),'unrared.txt'))
         # x.close() #TODO do i need this?...
     return
 
 searchFolders(searchPath)
-logging.info('Files to be extracted: %s ' % (filesToExtract))
+logger.info('Files to be extracted: %s ' % (filesToExtract))
 
 unrar()
 
