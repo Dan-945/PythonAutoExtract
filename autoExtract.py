@@ -1,6 +1,6 @@
 import os, logging, rarfile, moveFiles, shutil
 logger = logging.getLogger('autoExtracter')
-fh = logging.FileHandler('/home/thebox/Scripts/autoExtractLog.txt')
+fh = logging.FileHandler('/home/thebox/Scripts/Logs/autoExtractLog.txt')
 fh.setLevel(logging.DEBUG)
 formatter = logging.Formatter('%(asctime)s, - %(levelname)s %(message)s')
 logger.addHandler(fh)
