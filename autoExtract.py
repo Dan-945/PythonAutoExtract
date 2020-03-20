@@ -6,7 +6,7 @@ formatter = logging.Formatter('%(asctime)s, - %(levelname)s %(message)s')
 logger.addHandler(fh)
 fh.setFormatter(formatter)
 
-logging.disable(logging.DEBUG)
+#logging.disable(logging.DEBUG)
 
 searchPath = r'/home/thebox/SeagateDisk/MediaFolder/completed'
 filesToExtract = []
@@ -22,7 +22,7 @@ def folderContainsRar(folder):
             else:
                 filesToExtract.append(os.path.join(searchPath, folder, file))
                 logger.info('%s added for extracting' % (file))
-                """no longer needed - DAHE - 2020-03-20
+        """ no longer needed.
         if file.endswith('.mkv'):
             if os.path.exists(os.path.join(searchPath,folder,file+'copied.txt')):
                   logger.debug('%s already copied, will be skipped' % (file))   
@@ -46,11 +46,14 @@ def searchFolders(searchPath):
 
 def unrar():
     for i in range(len(filesToExtract)):
-        x = rarfile.RarFile(filesToExtract[i])
-        x.extractall(moveFiles.fileSort(os.path.basename(filesToExtract[i])))
+        #x = rarfile.RarFile(filesToExtract[i])
+        #x.extractall(moveFiles.fileSort(os.path.basename(filesToExtract[i])))
         logger.debug('file will be extracted to %s' % (moveFiles.fileSort(os.path.basename(filesToExtract[i]))))
-        os.mknod(os.path.join(os.path.dirname(filesToExtract[i]),'unrared.txt'))
-        x.close() #TODO do i need this?...
+        try:
+            os.mknod(os.path.join(os.path.dirname(filesToExtract[i]),'unrared.txt'))
+        except:
+            logger.debug('file already exists, multiple rar files')
+        #x.close() #TODO do i need this?...
     return
 
 searchFolders(searchPath)
