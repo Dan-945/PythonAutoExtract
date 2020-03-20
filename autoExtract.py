@@ -46,8 +46,8 @@ def searchFolders(searchPath):
 
 def unrar():
     for i in range(len(filesToExtract)):
-        #x = rarfile.RarFile(filesToExtract[i])
-        #x.extractall(moveFiles.fileSort(os.path.basename(filesToExtract[i])))
+        x = rarfile.RarFile(filesToExtract[i])
+        x.extractall(moveFiles.fileSort(os.path.basename(filesToExtract[i])))
         logger.debug('file will be extracted to %s' % (moveFiles.fileSort(os.path.basename(filesToExtract[i]))))
         try:
             os.mknod(os.path.join(os.path.dirname(filesToExtract[i]),'unrared.txt'))
