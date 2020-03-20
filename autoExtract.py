@@ -22,7 +22,8 @@ def folderContainsRar(folder):
             else:
                 filesToExtract.append(os.path.join(searchPath, folder, file))
                 logger.info('%s added for extracting' % (file))
-        if file.endswith('.mkv'):
+                """no longer needed - DAHE - 2020-03-20
+             if file.endswith('.mkv'):
             if os.path.exists(os.path.join(searchPath,folder,file+'copied.txt')):
                   logger.debug('%s already copied, will be skipped' % (file))   
             else:
@@ -33,7 +34,7 @@ def folderContainsRar(folder):
                     logger.info('%s file to be copied' % (file))
                     os.mknod(os.path.join(searchPath,folder,file+'copied.txt'))
                 else:
-                    logger.error('file does not exist')
+                    logger.error('file does not exist')"""
     return
 
 # walk through all folders to check content.
@@ -46,7 +47,7 @@ def searchFolders(searchPath):
 def unrar():
     for i in range(len(filesToExtract)):
         x = rarfile.RarFile(filesToExtract[i])
-        x.extractall(moveFiles.fileSort(os.path.basename(filesToExtract[i])))                        
+        x.extractall(moveFiles.fileSort(os.path.basename(filesToExtract[i])))
         logger.debug('file will be extracted to %s' % (moveFiles.fileSort(os.path.basename(filesToExtract[i]))))
         os.mknod(os.path.join(os.path.dirname(filesToExtract[i]),'unrared.txt'))
         x.close() #TODO do i need this?...
