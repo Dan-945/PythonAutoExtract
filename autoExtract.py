@@ -23,7 +23,7 @@ def folderContainsRar(folder):
                 filesToExtract.append(os.path.join(searchPath, folder, file))
                 logger.info('%s added for extracting' % (file))
                 """no longer needed - DAHE - 2020-03-20
-             if file.endswith('.mkv'):
+        if file.endswith('.mkv'):
             if os.path.exists(os.path.join(searchPath,folder,file+'copied.txt')):
                   logger.debug('%s already copied, will be skipped' % (file))   
             else:
