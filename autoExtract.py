@@ -1,16 +1,29 @@
-import os, logging, rarfile, moveFiles, shutil
+import logging
+import moveFiles
+import os
+import rarfile
+from dynaconf import Dynaconf
+
+settings = Dynaconf(
+    settings_files=['settings.json'],
+)
+if not os.path.exists(os.path.join(os.getcwd(), "settings.json")):
+    f = open("settings.json", "w")
+    f.writelines("{")
+    f.writelines("\"Source\":\"/Volumes/Downloads/Transmission/Completed/\",")
+    f.writelines("\"Destination\":\"/Volumes/Downloads/Transmission/Temp/\"")
+    f.writelines("}")
+    f.close()
+
 logger = logging.getLogger('autoExtracter')
-fh = logging.FileHandler('/home/thebox/Scripts/Logs/autoExtractLog.txt')
+fh = logging.FileHandler('autoExtractLog.txt')
 fh.setLevel(logging.DEBUG)
 formatter = logging.Formatter('%(asctime)s, - %(levelname)s %(message)s')
 logger.addHandler(fh)
 fh.setFormatter(formatter)
-
-#logging.disable(logging.DEBUG)
-
 searchPath = r'/home/thebox/SeagateDisk/MediaFolder/completed'
 filesToExtract = []
-
+#logging.disable(logging.DEBUG)
 # Search through folders to find all rar files to be extracted.
 def folderContainsRar(folder):
     dir_listing = os.listdir(folder)
