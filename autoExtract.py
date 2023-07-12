@@ -26,6 +26,7 @@ logger = logging.getLogger('autoExtracter')
 fh = logging.FileHandler('autoExtractLog.txt')
 fh.setLevel(logging.DEBUG)
 formatter = logging.Formatter('%(asctime)s, - %(levelname)s %(message)s')
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s, - %(levelname)s %(message)s')
 logger.addHandler(fh)
 fh.setFormatter(formatter)
 
@@ -53,7 +54,7 @@ class tvShowEpisode():
         if self.fileType == "rar":
             x = rarfile.RarFile(self.fullFileName)
             x.extractall(self.destination)
-            logger.info('file will be extracted to %s' % (destination))
+            logger.debug('file will be extracted to %s' % (destination))
             try:
                 #create file to avoid unraring again
                 with open(os.path.join(self.filePath,'unrared'),"a"):
@@ -88,7 +89,7 @@ def checkFilesInFolder(folder):
                 tvShowEpisodeList.append(tmp)
         if file.endswith('.mkv'):
             if os.path.exists(os.path.join(folder,file+'copied')):
-                  logger.debug('%s already copied, will be skipped' % (file))   
+                  logger.debug('%s already copied, will be skipped' % (file))
             else:
                 tmp = tvShowEpisode()
                 tmp.fileName = file
