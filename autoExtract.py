@@ -21,9 +21,8 @@ settings = Dynaconf(
 source = settings.source
 destination = settings.destination
 #################### SETTINGS #######################################
-
 logger = logging.getLogger('autoExtracter')
-fh = logging.FileHandler('autoExtractLog.txt')
+fh = logging.FileHandler('/Users/danhelgeland/PycharmProjects/PythonAutoExtract/autoExtractLog.txt')
 fh.setLevel(logging.DEBUG)
 formatter = logging.Formatter('%(asctime)s, - %(levelname)s %(message)s')
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s, - %(levelname)s %(message)s')
