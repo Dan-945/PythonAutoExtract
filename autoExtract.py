@@ -1,5 +1,4 @@
 import logging
-import moveFiles
 import os
 import rarfile
 from dynaconf import Dynaconf
