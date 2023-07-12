@@ -14,6 +14,14 @@ if not os.path.exists(os.path.join(os.getcwd(), "settings.json")):
     f.writelines("\"Destination\":\"/Volumes/Downloads/Transmission/Temp/\"")
     f.writelines("}")
     f.close()
+settings = Dynaconf(
+    settings_files=['settings.json'],
+)
+
+#################### SETTINGS ########################################
+source = settings.source
+destination = settings.destination
+#################### SETTINGS #######################################
 
 logger = logging.getLogger('autoExtracter')
 fh = logging.FileHandler('autoExtractLog.txt')
@@ -21,31 +29,76 @@ fh.setLevel(logging.DEBUG)
 formatter = logging.Formatter('%(asctime)s, - %(levelname)s %(message)s')
 logger.addHandler(fh)
 fh.setFormatter(formatter)
-searchPath = r'/home/thebox/SeagateDisk/MediaFolder/completed'
+
+searchPath = source
+destination = destination
+
 filesToExtract = []
-#logging.disable(logging.DEBUG)
+logging.disable(logging.DEBUG)
 # Search through folders to find all rar files to be extracted.
+
+tvShowEpisodeList = []
+class tvShowEpisode():
+    filePath = ""
+    fileType = ""
+    fileName = ""
+    destination = ""
+    handled = False
+    fullFileName = ""
+    def handleFile(self):
+        self.fullFileName = self.filePath + "/" +  self.fileName
+        if self.fileType == "rar":
+            if os.path.exists(os.path.join(self.filePath, 'unrared')):
+                logger.debug('%s file already extracted, will be skipped' % (self.fileName))
+            else:
+                x = rarfile.RarFile(self.fullFileName)
+                x.extractall(self.destination)
+                logger.info('file will be extracted to %s' % (destination))
+                try:
+                    with open(os.path.join(self.filePath,'unrared'),"a"):
+                        logger.info("file created " + "unrared" + "at " + self.filePath)
+                    #os.mknod(os.path.join(self.filePath,'unrared'))
+                except Exception as e:
+                    logger.info(e)
+        elif self.fileType == "mkv":
+            os.popen('cp ' + self.fullFileName + ' ' + destination + self.fileName)
+        else:
+            logger.debug("filetype not detected")
+
 def folderContainsRar(folder):
     dir_listing = os.listdir(folder)
     fileToBeCopied = ''
     for file in dir_listing:
         if file.endswith('.rar'):
-            if os.path.exists(os.path.join(folder, 'unrared.txt')):
+            if os.path.exists(os.path.join(folder, 'unrared')):
                 logger.debug('%s file already extracted, will be skipped' % (file))
             else:
-                filesToExtract.append(os.path.join(searchPath, folder, file))
-                logger.info('%s added for extracting' % (file))
-        """ no longer needed.
+                tmp = tvShowEpisode()
+                tmp.fileName = file
+                tmp.filePath = folder
+                tmp.fileType = "rar"
+                tmp.destination = destination
+                tvShowEpisodeList.append(tmp)
+                """filesToExtract.append(os.path.join(searchPath, folder, file))
+                logger.info('%s added for extracting' % (file))"""
+
         if file.endswith('.mkv'):
-            if os.path.exists(os.path.join(searchPath,folder,file+'copied.txt')):
+            if os.path.exists(os.path.join(folder,file+'copied')):
                   logger.debug('%s already copied, will be skipped' % (file))   
             else:
+                tmp = tvShowEpisode()
+                tmp.fileName = file
+                tmp.filePath = searchPath + folder
+                tmp.fileType = "mkv"
+                tmp.destination = destination
+                tvShowEpisodeList.append(tmp)
                 fileToBeCopied = (os.path.join(searchPath, folder, file))
-                if os.path.exists(fileToBeCopied):
+                """if os.path.exists(fileToBeCopied):
                     os.popen('cp '+(os.path.join(searchPath, folder, file))+' '+ moveFiles.fileSort(file))
+                    os.popen()
                     logger.debug('%s file will be copied to %s' % ( (os.path.join(searchPath, folder, file)), moveFiles.fileSort(file)))
                     logger.info('%s file to be copied' % (file))
-                    os.mknod(os.path.join(searchPath,folder,file+'copied.txt'))
+                    #os.mknod(os.path.join(searchPath,folder,file+'copied.txt'))
                 else:
                     logger.error('file does not exist')"""
     return
@@ -71,5 +124,9 @@ def unrar():
 
 searchFolders(searchPath)
 logger.info('Search complete')
-unrar()
+logger.info('Starting unrar / copying files')
+for i in tvShowEpisodeList:
+    i.handleFile()
+logger.info('Finished handling files')
+#unrar()
 
