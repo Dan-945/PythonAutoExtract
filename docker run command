@@ -1,0 +1,7 @@
+docker run -d \
+  --name=dockertest \
+  -v /home/danhelgeland/Documents/watch:/Watch \
+  -v /home/danhelgeland/Documents/extract to:/ExtractFolder  \
+  -v /home/danhelgeland/Documents/log:/LogFolder  \
+  --restart unless-stopped \
+dockertest

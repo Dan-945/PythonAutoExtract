@@ -1,0 +1,8 @@
+services:
+  dockertest:
+    build: .
+    container_name: dockertest
+    volumes:
+      - /home/danhelgeland/Documents/watch:/Watch
+      - /home/danhelgeland/Documents/extract to:/ExtractFolder  #optional
+      - /home/danhelgeland/Documents/log:/LogFolder  #optional
