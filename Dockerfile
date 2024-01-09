@@ -1,8 +1,4 @@
 FROM python:3.12
-# TODO: create mount points for watch and copy to folders and log folder
-# TODO: test with service that only writes to log once a minute
-# TODO: install on dockermachine
-
 #COPY requirements.txt /opt/app/requirements.txt
 #WORKDIR /opt/app
 #RUN pip install -r requirements.txt
@@ -20,9 +16,12 @@ FROM python:3.12
 
 
 ######################### auto exctract
+# copy requirements file and install requirements
 COPY requirements.txt /opt/app/requirements.txt
 WORKDIR /opt/app
 RUN pip install -r requirements.txt
+
+# copies all files from cwd, overkill, should maybe just be the actual py script.
 COPY . /opt/app
 ADD ./autoExtract.py .
 VOLUME ["./Watch", "/Watch"]

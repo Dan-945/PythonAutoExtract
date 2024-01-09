@@ -3,8 +3,8 @@ services:
     build: .
     container_name: autoextract
     volumes:
-      - /home/danhelgeland/Documents/watch:/Watch
-      - /home/danhelgeland/Documents/extract to:/ExtractFolder  #optional
+      - /mnt/Downloads/Transmission/Completed:/Watch
+      - /mnt/Downloads/Transmission/Temp:/ExtractFolder  #optional
       - /home/danhelgeland/Documents/log:/LogFolder  #optional
     environment:
       - INTERVAL=3600

@@ -12,6 +12,7 @@ settings = Dynaconf(
 if not os.path.exists(os.path.join(os.getcwd(), "settings.json")):
     f = open("settings.json", "w")
     f.writelines("{")
+    # /Watch is folder mounted in dockerfile
     f.writelines("\"Source\":\"/Watch/\",")
     f.writelines("\"Destination\":\"/ExtractFolder/\"")
     f.writelines("}")
@@ -109,7 +110,7 @@ def search_folders(searchPath):
 
 interval = int(os.getenv("INTERVAL",3600))
 
-
+# define scheduled function to run at set interval
 def do_something(scheduler):
     scheduler.enter(interval,1, do_something, (scheduler,))
     logger.info("Scheduler running")
@@ -120,7 +121,11 @@ def do_something(scheduler):
         i.handle_file()
     logger.info('Finished handling files')
 
-
+# create sheduler instance
 my_scheduler = sched.scheduler(time.time, time.sleep)
+
+# config scheduler with what function to run
 my_scheduler.enter(5, 1, do_something, (my_scheduler,))
+
+# run scheduler
 my_scheduler.run()
