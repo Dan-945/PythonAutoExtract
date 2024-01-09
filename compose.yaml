@@ -1,8 +1,10 @@
 services:
-  dockertest:
+  autoextract:
     build: .
-    container_name: dockertest
+    container_name: autoextract
     volumes:
       - /home/danhelgeland/Documents/watch:/Watch
       - /home/danhelgeland/Documents/extract to:/ExtractFolder  #optional
       - /home/danhelgeland/Documents/log:/LogFolder  #optional
+    environment:
+      - INTERVAL=3600

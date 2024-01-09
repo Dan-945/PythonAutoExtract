@@ -19,9 +19,6 @@ FROM python:3.12
 #CMD ["python", "./dockertest.py"]
 
 
-
-
-
 ######################### auto exctract
 COPY requirements.txt /opt/app/requirements.txt
 WORKDIR /opt/app

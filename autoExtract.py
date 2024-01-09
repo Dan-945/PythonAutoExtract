@@ -1,7 +1,7 @@
 import logging
 import os
 import sched
-from datetime import time
+import time
 
 import rarfile
 from dynaconf import Dynaconf
@@ -12,8 +12,8 @@ settings = Dynaconf(
 if not os.path.exists(os.path.join(os.getcwd(), "settings.json")):
     f = open("settings.json", "w")
     f.writelines("{")
-    f.writelines("\"Source\":\"/Volumes/Downloads/Transmission/Completed/\",")
-    f.writelines("\"Destination\":\"/Volumes/Downloads/Transmission/Temp/\"")
+    f.writelines("\"Source\":\"/Watch/\",")
+    f.writelines("\"Destination\":\"/ExtractFolder/\"")
     f.writelines("}")
     f.close()
 settings = Dynaconf(
@@ -25,7 +25,7 @@ source = settings.source
 destination = settings.destination
 #################### SETTINGS #######################################
 logger = logging.getLogger('autoExtracter')
-fh = logging.FileHandler('/Users/danhelgeland/PycharmProjects/PythonAutoExtract/autoExtractLog.txt')
+fh = logging.FileHandler('/LogFolder/autoExtractLog.txt')
 fh.setLevel(logging.DEBUG)
 formatter = logging.Formatter('%(asctime)s, - %(levelname)s %(message)s')
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s, - %(levelname)s %(message)s')
@@ -107,8 +107,11 @@ def search_folders(searchPath):
         check_files_in_folder(folderName)
     return
 
+interval = int(os.getenv("INTERVAL",3600))
+
+
 def do_something(scheduler):
-    scheduler.enter(3600,1, do_something, (scheduler,))
+    scheduler.enter(interval,1, do_something, (scheduler,))
     logger.info("Scheduler running")
     search_folders(search_path)
     logger.info('Search complete')
