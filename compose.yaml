@@ -8,3 +8,4 @@ services:
       - /home/danhelgeland/Documents/log:/LogFolder  #optional
     environment:
       - INTERVAL=3600
+      - TZ=Europe/Oslo
